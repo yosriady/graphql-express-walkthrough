@@ -22,6 +22,8 @@ import {
   Text
 } from "spectacle";
 
+import CodeSlide from 'spectacle-code-slide';
+
 // Import image preloader util
 import preloader from "spectacle/lib/utils/preloader";
 
@@ -46,7 +48,7 @@ const images = {
 preloader(images);
 
 const theme = createTheme({
-  primary: "#ff4081"
+  primary: "#00a3da"
 });
 
 export default class Presentation extends React.Component {
@@ -54,117 +56,88 @@ export default class Presentation extends React.Component {
     return (
       <Spectacle theme={theme}>
         <Deck transition={["zoom", "slide"]} transitionDuration={500}>
-          <Slide transition={["zoom"]} bgColor="primary">
-            <Heading size={1} fit caps lineHeight={1} textColor="black">
-              Spectacle
+          <Slide transition={["spin", "slide"]} bgColor="primary">
+            <Heading size={1} fit lineHeight={1}>
+              Building a GraphQL Server in Node.js
             </Heading>
-            <Heading size={1} fit caps>
-              A ReactJS Presentation Library
-            </Heading>
-            <Heading size={1} fit caps textColor="black">
-              Where You Can Write Your Decks In JSX
-            </Heading>
-            <Link href="https://github.com/FormidableLabs/spectacle">
-              <Text bold caps textColor="tertiary">View on Github</Text>
-            </Link>
-            <Text textSize="1.5em" margin="20px 0px 0px" bold>Hit Your Right Arrow To Begin!</Text>
-          </Slide>
-          <Slide transition={["slide"]} bgColor="black" notes="You can even put notes on your slide. How awesome is that?">
-            <Image src={images.kat.replace("/", "")} margin="0px auto 40px" height="293px"/>
-            <Heading size={2} caps fit textColor="primary" textFont="primary">
-              Wait what?
+            <Heading size={1} fit caps lineHeight={1}>
+              Code Walkthrough
             </Heading>
           </Slide>
-          <Slide transition={["zoom", "fade"]} bgColor="primary" notes="<ul><li>talk about that</li><li>and that</li></ul>">
-            <CodePane
-              lang="jsx"
-              source={require("raw!../assets/deck.example")}
-              margin="20px auto"
-            />
-          </Slide>
-          <Slide transition={["slide"]} bgImage={images.city.replace("/", "")} bgDarken={0.75}>
-            <Appear fid="1">
-              <Heading size={1} caps fit textColor="primary">
-                Full Width
-              </Heading>
-            </Appear>
-            <Appear fid="2">
-              <Heading size={1} caps fit textColor="tertiary">
-                Adjustable Darkness
-              </Heading>
-            </Appear>
-            <Appear fid="3">
-              <Heading size={1} caps fit textColor="primary">
-                Background Imagery
-              </Heading>
-            </Appear>
-          </Slide>
-          <Slide transition={["zoom", "fade"]} bgColor="primary">
-            <Heading caps fit>Flexible Layouts</Heading>
-            <Layout>
-              <Fill>
-                <Heading size={4} caps textColor="secondary" bgColor="white" margin={10}>
-                  Left
-                </Heading>
-              </Fill>
-              <Fill>
-                <Heading size={4} caps textColor="secondary" bgColor="white" margin={10}>
-                  Right
-                </Heading>
-              </Fill>
-            </Layout>
-          </Slide>
-          <Slide transition={["slide"]} bgColor="black">
-            <BlockQuote>
-              <Quote>Wonderfully formatted quotes</Quote>
-              <Cite>Ken Wheeler</Cite>
-            </BlockQuote>
-          </Slide>
-          <Slide transition={["spin", "zoom"]} bgColor="tertiary">
-            <Heading caps fit size={1} textColor="primary">
-              Inline Markdown
-            </Heading>
-            <Markdown>
-              {`
-![Markdown Logo](${images.markdown.replace("/", "")})
 
-You can write inline images, [Markdown Links](http://commonmark.org), paragraph text and most other markdown syntax
-* Lists too!
-* With ~~strikethrough~~ and _italic_
-* And lets not forget **bold**
-              `}
-            </Markdown>
-          </Slide>
-          <Slide transition={["slide", "spin"]} bgColor="primary">
-            <Heading caps fit size={1} textColor="tertiary">
-              Smooth
+          <Slide transition={["spin", "slide"]} bgColor="primary">
+            <Heading size={1} fit lineHeight={1}>
+              Table of Contents
             </Heading>
-            <Heading caps fit size={1} textColor="secondary">
-              Combinable Transitions
-            </Heading>
-          </Slide>
-          <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
-            <List>
-              <Appear><ListItem>Inline style based theme system</ListItem></Appear>
-              <Appear><ListItem>Autofit text</ListItem></Appear>
-              <Appear><ListItem>Flexbox layout system</ListItem></Appear>
-              <Appear><ListItem>React-Router navigation</ListItem></Appear>
-              <Appear><ListItem>PDF export</ListItem></Appear>
-              <Appear><ListItem>And...</ListItem></Appear>
+            <List textColor="white">
+              <Appear><ListItem>package.json</ListItem></Appear>
+              <Appear><ListItem>server.js</ListItem></Appear>
+              <Appear><ListItem>schema.js</ListItem></Appear>
             </List>
           </Slide>
-          <Slide transition={["slide"]} bgColor="primary">
-            <Heading size={1} caps fit textColor="tertiary">
-              Your presentations are interactive
+
+          {/* Next slides */}
+
+          <CodeSlide
+            transition={["spin", "slide"]}
+            lang="js"
+            code={require("raw!../assets/code/package.json")}
+            ranges={[
+              { loc: [0, 999], title: "package.json" },
+              { loc: [11, 19], note: "These are all of our installed packages" },
+              { loc: [16, 18], note: "These are our GraphQL dependencies" }
+            ]}
+          />
+
+          <CodeSlide
+            transition={[]}
+            lang="js"
+            code={require("raw!../assets/code/server")}
+            ranges={[
+              { loc: [0, 999], title: "server.js" },
+              { loc: [0, 2], note: "Use the graphql library" },
+              { loc: [3, 4], note: "Point to our schema" },
+              { loc: [5, 6] },
+              { loc: [7, 11], note: "Use the graphql middleware for the route 'graphql', with the given schema" },
+              { loc: [12, 15], note: "Start the server" },
+              // ...
+            ]}
+          />
+
+          <CodeSlide
+            transition={[]}
+            lang="js"
+            code={require("raw!../assets/code/schema")}
+            ranges={[
+
+              // Post type
+              { loc: [0, 999], title: "schema.js" },
+              { loc: [0, 10], note: "Import the GraphQL types we're going to use." },
+              { loc: [10, 11], note: "Import our data store." },
+              { loc: [12, 29], note: "The Post type" },
+              { loc: [12, 15], note: "Start by defining some metadata." },
+              { loc: [15, 21], note: "Annotate fields with their types." },
+              { loc: [21, 27], note: "Links to other, non-leaf nodes need resolver functions which tell GraphQL where to pull data from." },
+
+              // Query type
+              { loc: [30, 31], note: "The 'Query' type." },
+              { loc: [30, 33], note: "The 'Query' type defines the valid starting point of our queries." },
+              { loc: [33, 44], note: "Define one of the possible roots: 'posts'" },
+              { loc: [34, 36], note: "'posts' returns a list of type 'Post'" },
+              { loc: [36, 39], note: "'args' lets us specify acceptable arguments for a particular node" },
+              { loc: [39, 42], note: "Our resolve function can make use of arguments" },
+
+              // Schema
+              { loc: [57, 62], note: "Return the schema, for GraphQL to use." },
+            ]}
+          />
+
+          <Slide transition={["spin", "slide"]} bgColor="primary">
+            <Heading size={1} fit lineHeight={1}>
+              Praise the demo gods
             </Heading>
-            <Interactive/>
           </Slide>
-          <Slide transition={["spin", "slide"]} bgColor="tertiary">
-            <Heading size={1} caps fit lineHeight={1.5} textColor="primary">
-              Made with love in Seattle by
-            </Heading>
-            <Link href="http://www.formidablelabs.com"><Image width="100%" src={images.logo}/></Link>
-          </Slide>
+
         </Deck>
       </Spectacle>
     );

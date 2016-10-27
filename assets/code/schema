@@ -1,0 +1,62 @@
+import {
+  GraphQLList,
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLNonNull,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLFloat
+} from 'graphql';
+
+import db from './db.js';
+
+const Post = new GraphQLObjectType({
+  name: "Post",
+  description: "Represents a blog post",
+  fields: () => ({
+    id: {type: GraphQLInt},
+    title: {type: GraphQLString},
+    url: {type: GraphQLString},
+    body: {type: GraphQLString},
+    votes: {type: GraphQLInt},
+    author: {
+      type: User,
+      resolve: function(post) {
+        return db.getUserById(post.author_id);
+      }
+    }
+  })
+});
+
+const Query = new GraphQLObjectType({
+  name: 'BlogSchema',
+  description: 'The root of all our queries',
+  fields: () => ({
+    posts: {
+      type: new GraphQLList(Post),
+      args: {
+        limit: {type: GraphQLInt}
+      },
+      resolve: function(_root, {limit}) {
+        return db.getPosts({limit});
+      }
+    },
+
+    post: {
+      type: Post,
+      description: "Retrieve post by id",
+      args: {
+        id: {type: new GraphQLNonNull(GraphQLInt)}
+      },
+      resolve: function(_root, {id, title}) {
+        return db.getPostById(id);
+      }
+    }
+  }),
+});
+
+const schema = new GraphQLSchema({
+  query: Query
+});
+
+export default schema;
