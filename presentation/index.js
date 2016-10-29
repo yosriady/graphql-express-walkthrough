@@ -92,21 +92,6 @@ export default class Presentation extends React.Component {
           <CodeSlide
             transition={[]}
             lang="js"
-            code={require("raw!../assets/code/server")}
-            ranges={[
-              { loc: [0, 999], title: "server.js" },
-              { loc: [0, 2], note: "Use the graphql library" },
-              { loc: [3, 4], note: "Point to our schema" },
-              { loc: [5, 6] },
-              { loc: [7, 11], note: "Use the graphql middleware for the route 'graphql', with the given schema" },
-              { loc: [12, 15], note: "Start the server" },
-              // ...
-            ]}
-          />
-
-          <CodeSlide
-            transition={[]}
-            lang="js"
             code={require("raw!../assets/code/schema")}
             ranges={[
 
@@ -129,6 +114,21 @@ export default class Presentation extends React.Component {
 
               // Schema
               { loc: [57, 62], note: "Return the schema, for GraphQL to use." },
+            ]}
+          />
+
+          <CodeSlide
+            transition={[]}
+            lang="js"
+            code={require("raw!../assets/code/server")}
+            ranges={[
+              { loc: [0, 999], title: "server.js" },
+              { loc: [0, 2], note: "Use the graphql library" },
+              { loc: [3, 4], note: "Point to our schema" },
+              { loc: [5, 6] },
+              { loc: [7, 11], note: "Use the graphql middleware for the route 'graphql', with the given schema" },
+              { loc: [12, 15], note: "Start the server" },
+              // ...
             ]}
           />
 
